@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-sm-12">
+    <table class="table table-responsive-sm">
+      <thead>
+      <tr>
+        <th scope="col">Procedure</th>
+        <th scope="col">Doctor</th>
+        <th scope="col">Date</th>
+        <th scope="col">Patient</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Email</th>
+        <th scope="col">Message</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let booking of bookings">
+        <th>{{booking.procedure.name}}</th>
+        <td>{{booking.doctor.name}}</td>
+        <td>{{booking.procedureStartDate | date}}</td>
+        <td>{{booking.booking.bookingUser.fullName}}</td>
+        <td>{{booking.booking.bookingUser.phone}}</td>
+        <td>{{booking.booking.bookingUser.email}}</td>
+        <td>{{booking.booking.comment}}</td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>

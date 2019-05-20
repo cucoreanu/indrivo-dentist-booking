@@ -1,0 +1,15 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" [routerLink]="['/booking']">
+    <img src="https://image.flaticon.com/icons/svg/822/822166.svg" width="30" height="30"
+         class="d-inline-block align-top mr-2" alt="Dentist Booking">
+    Dentist Booking
+  </a>
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/admin']">Admin</a>
+    </li>
+  </ul>
+</nav>
+<div class="container mt-5">
+  <router-outlet></router-outlet>
+</div>

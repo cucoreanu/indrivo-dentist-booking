@@ -1,0 +1,6 @@
+.required-marker::after {
+  content: '*';
+  color: #ff541f;
+  margin: 0 4px;
+  display: inline-block;
+}

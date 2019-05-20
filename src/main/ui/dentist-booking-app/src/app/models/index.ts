@@ -1,0 +1,7 @@
+export { Procedure } from './procedure.model'
+export { Doctor } from './doctor.model'
+export { BookingResource } from './booking.resource'
+export { Booking } from './booking.model'
+export { BookingDetail } from './booking-detail.model'
+export { BookingDetailResource } from './booking-detail.resource'
+export { BookingUser } from './booking-user.model'

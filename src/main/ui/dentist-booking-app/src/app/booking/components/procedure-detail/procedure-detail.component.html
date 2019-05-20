@@ -1,0 +1,131 @@
+<form #form='ngForm'>
+  <!-- procedure -->
+  <div class="form-group row">
+    <label for="procedure" class="col-sm-5 col-form-label text-sm-right required-marker">Procedure</label>
+    <div class="col-sm-6">
+      <select type="text" class="form-control custom-select" id="procedure" required name="procedure"
+              #procedure="ngModel" [(ngModel)]="bookingResource.procedureId"
+              (ngModelChange)="checkAvailability()">
+        <option selected disabled value="null">Select a procedure</option>
+        <option *ngFor="let procedure of procedures" [value]="procedure.id">{{procedure.name}}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- doctor -->
+  <div class="form-group row">
+    <label for="doctor" class="col-sm-5 col-form-label text-sm-right required-marker">Doctor</label>
+    <div class="col-sm-6">
+      <select type="text" class="form-control custom-select" id="doctor" required name="doctor"
+              #doctor="ngModel" [(ngModel)]="bookingResource.doctorId"
+              (ngModelChange)="checkAvailability()">
+        <option value="null" selected disabled>Select a doctor</option>
+        <option *ngFor="let doctor of doctors" [value]="doctor.id">{{doctor.name}}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- procedure date -->
+  <div class="form-group row">
+    <label for="bookingDate" class="col-sm-5 col-form-label text-sm-right required-marker">Procedure Date</label>
+    <div class="col-sm-6">
+      <input type="text" autocomplete="off" name="datePicker" class="form-control" id="bookingDate" required
+             #dp="bsDatepicker"
+             bsDatepicker
+             #datePicker="ngModel" [(ngModel)]="bookingDate"
+             [bsConfig]="{ dateInputFormat: 'DD.MM.YYYY, HH:mm', minDate: minDate }"
+             (ngModelChange)="checkAvailability()"
+             [ngClass]="{'is-valid': procedureAvailable && datePicker.valid, 'is-invalid': procedureAvailable === false}">
+      <div class="valid-feedback">Available for booking</div>
+      <div class="invalid-feedback" *ngIf="!procedureAvailable">The indicated date is booked</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- patient name -->
+  <div class="form-group row">
+    <label for="patientName" class="col-sm-5 col-form-label text-sm-right required-marker">Your name,
+      surname</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="patientName" placeholder="Ex: John Doe" required name="patientName"
+             userName
+             [(ngModel)]="bookingResource.patientFullName"
+             #patientName="ngModel"
+             [ngClass]="{
+               'is-valid': patientName.valid,
+               'is-invalid': (patientName.touched || patientName.dirty) && patientName.invalid}">
+      <div class="invalid-feedback" *ngIf="patientName.getError('required')">The field is required</div>
+      <div class="invalid-feedback" *ngIf="patientName.getError('invalidFormat') && !patientName.getError('required')">
+        Invalid name format
+      </div>
+    </div>
+  </div>
+
+  <!-- patient phone -->
+  <div class="form-group row">
+    <label for="patientPhone" class="col-sm-5 col-form-label text-sm-right required-marker">Your phone</label>
+    <div class="col-sm-6">
+      <input type="text"
+             class="form-control" id="patientPhone" placeholder="Ex: 601020304" required name="phoneNumber"
+             phoneNumber
+             [(ngModel)]="bookingResource.patientPhone"
+             #phoneNumber="ngModel"
+             [ngClass]="{
+               'is-valid': phoneNumber.valid,
+               'is-invalid': (phoneNumber.touched || phoneNumber.dirty) && phoneNumber.invalid}">
+      <div class="invalid-feedback" *ngIf="phoneNumber.getError('required')">The field is required</div>
+      <div class="invalid-feedback" *ngIf="phoneNumber.getError('invalidFormat') && !phoneNumber.getError('required')">
+        Invalid phone format
+      </div>
+    </div>
+  </div>
+
+  <!-- patient email -->
+  <div class="form-group row">
+    <label for="patientEmail" class="col-sm-5 col-form-label text-sm-right required-marker">Your Email</label>
+    <div class="col-sm-6">
+      <input type="text"
+             class="form-control" id="patientEmail" placeholder="Ex: john@email.net" required name="patientEmail"
+             email
+             [(ngModel)]="bookingResource.patientEmail"
+             #patientEmail="ngModel"
+             [ngClass]="{
+               'is-valid': patientEmail.valid,
+               'is-invalid': (patientEmail.touched || patientEmail.dirty) && patientEmail.invalid}">
+      <div class="invalid-feedback" *ngIf="patientEmail.getError('required')">The field is required</div>
+      <div class="invalid-feedback"
+           *ngIf="patientEmail.getError('invalidFormat') && !patientEmail.getError('required')">
+        Invalid email format
+      </div>
+    </div>
+  </div>
+
+  <!-- comment -->
+  <div class="form-group row">
+    <label for="comment" class="col-sm-5 col-form-label text-sm-right">Message</label>
+    <div class="col-sm-6">
+    <textarea type="text"
+              class="form-control" id="comment" placeholder="Leave a message for the doctor" name="comment"
+              maxlength="200"
+              [(ngModel)]="bookingResource.comment"
+              #comment="ngModel"
+              [ngClass]="{
+               'is-invalid': (comment.touched || comment.dirty) && comment.invalid}">
+    </textarea>
+      <div class="invalid-feedback"
+           *ngIf="comment.getError('maxlength')">
+        Max length: 200
+      </div>
+    </div>
+  </div>
+
+  <!-- submit button -->
+  <div class="row">
+    <div class="col-sm-11 text-right">
+      <input class="btn btn-primary" type="button" value="Book Now" (click)="emitSubmit()"
+             [disabled]="!form.valid || !procedureAvailable">
+    </div>
+  </div>
+
+</form>
